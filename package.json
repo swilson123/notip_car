@@ -1,0 +1,16 @@
+{
+  "name": "notip_car",
+  "version": "1.0.0",
+  "description": "White Rabbit car: MAVLink bridge between Noah's telemetry radio and Mission Planner, injecting the car's IMU compass heading",
+  "main": "white_rabbit.js",
+  "scripts": {
+    "start": "node white_rabbit.js"
+  },
+  "dependencies": {
+    "jspack": "0.0.4",
+    "serialport": "^12.0.0",
+    "underscore": "^1.13.7",
+    "winston": "^3.17.0",
+    "winston-daily-rotate-file": "^5.0.0"
+  }
+}

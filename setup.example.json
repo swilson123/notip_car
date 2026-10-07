@@ -1,0 +1,16 @@
+{
+    "radio_comName": "/dev/ttyUSB1",
+    "radio_baudrate": 115200,
+    "witmotion_hwt906_comName": "/dev/ttyUSB2",
+    "witmotion_hwt906_baudrate": 115200,
+
+    "mission_planner_ip_address": "0.0.0.0",
+    "mission_planner_port": 5760,
+
+    "bridge_system_id": 255,
+    "bridge_component_id": 158,
+    "heading_send_rate_hz": 5,
+    "heading_message_name": "CAR_HDG",
+    "imu_heading_offset": 0,
+    "imu_heading_reverse": true
+}
