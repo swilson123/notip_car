@@ -49,7 +49,8 @@ var white_rabbit = {
 
 	//Telemetry radio connected to Noah.......................
 	radio_port: {
-		comName: config.radio_comName,
+		comName: null,
+		productId: config.radio_productId || 'EA60',
 		baudrate: config.radio_baudrate,
 		serial: null,
 		connecting: false,
@@ -68,6 +69,7 @@ var white_rabbit = {
 	//WitMotion HWT906 IMU..................................
 	imu_port: {
 		comName: config.witmotion_hwt906_comName,
+		productId: config.witmotion_hwt906_productId || '7523',
 		baudrate: config.witmotion_hwt906_baudrate,
 		serial: null,
 		connecting: false,
@@ -125,18 +127,18 @@ function update_serialports(show_ports) {
 				console.log(port);
 			}
 
-			if (white_rabbit.witmotion_hwt906_comName == port.path) {
+			if (white_rabbit.imu_port.productId == port.productId) {
 				if (!white_rabbit.imu_port.connected && !white_rabbit.imu_port.connecting) {
 					console.log('IMU Port Found: ' + port.path);
-
+					white_rabbit.imu_port.comName = port.path;
 					white_rabbit.imu_connect(white_rabbit);
 				}
 			}
 
-			if (white_rabbit.radio_comName == port.path) {
+			if (white_rabbit.radio_port.productId == port.productId) {
 				if (!white_rabbit.radio_port.connected && !white_rabbit.radio_port.connecting) {
 					console.log('Radio Port Found: ' + port.path);
-
+					white_rabbit.radio_port.comName = port.path;
 					white_rabbit.connect_to_radio(white_rabbit);
 				}
 			}

@@ -1,8 +1,8 @@
 {
-    "radio_comName": "/dev/ttyUSB1",
-    "radio_baudrate": 115200,
-    "witmotion_hwt906_comName": "/dev/ttyUSB2",
-    "witmotion_hwt906_baudrate": 115200,
+    "radio_productId": "EA60",
+    "radio_baudrate": 57600,
+    "witmotion_hwt906_productId": "7523",
+    "witmotion_hwt906_baudrate": 921600,
 
     "mission_planner_ip_address": "0.0.0.0",
     "mission_planner_port": 5760,
