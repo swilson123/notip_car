@@ -25,8 +25,8 @@ try {
 	process.exit(1);
 }
 
-//mavlink.js exports the message namespace and defines the MAVLink parser class as a global
-var mavlink = require('./lib/mavlink/mavlink.js');
+//mavlink2.js (same file Noah uses - Noah's parser only accepts MAVLink 2 frames) exports the message namespace and defines the MAVLink parser class as a global
+var mavlink = require('./lib/mavlink/mavlink2.js');
 
 var white_rabbit = {
 	SerialPort: require('serialport').SerialPort,
