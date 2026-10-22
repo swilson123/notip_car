@@ -3,6 +3,23 @@
     "radio_baudrate": 57600,
     "witmotion_hwt906_productId": "7523",
     "witmotion_hwt906_baudrate": 921600,
+    "rtk_car_ntrip": true,
+    "rtk_noah_ntrip": false,
+    "rtk_here4_base": true,
+
+    "ntrip_address": "",
+    "ntrip_port": 2101,
+    "ntrip_mountpoint": "",
+
+    "rtk_vendorId": "1546",
+    "rtk_baudrate": 115200,
+    "rtk_rtcm_messages": [1005, 1074, 1084, 1094, 1124, 1230],
+    "rtk_survey_min_seconds": 30,
+    "rtk_survey_accuracy_m": 2.0,
+    "rtk_stationary_seconds": 3,
+    "rtk_moving_speed_mps": 1.0,
+    "rtk_heading_restart_deg": 20,
+    "rtk_ntrip_fix_timeout_seconds": 60,
 
     "mission_planner_ip_address": "0.0.0.0",
     "mission_planner_port": 5760,
