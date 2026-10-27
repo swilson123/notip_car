@@ -7,9 +7,9 @@
     "rtk_noah_ntrip": true,
     "rtk_here4_base": true,
 
-    "ntrip_address": "",
+    "ntrip_address": "156.63.133.115",
     "ntrip_port": 2101,
-    "ntrip_mountpoint": "",
+    "ntrip_mountpoint": "ODOT_G_R_E_C_RTX_RTCM3",
 
     "rtk_vendorId": "1546",
     "rtk_baudrate": 115200,
