@@ -4,7 +4,7 @@
     "witmotion_hwt906_productId": "7523",
     "witmotion_hwt906_baudrate": 921600,
     "rtk_car_ntrip": true,
-    "rtk_noah_ntrip": false,
+    "rtk_noah_ntrip": true,
     "rtk_here4_base": true,
 
     "ntrip_address": "",

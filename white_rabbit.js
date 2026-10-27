@@ -172,7 +172,7 @@ var white_rabbit = {
 		rtcm_seq: 0,
 		rtcm_sent: 0,
 		rtcm_bytes: 0,
-		active_source: null,		//car_ntrip | here4_base - who is feeding Noah right now
+		active_source: null,		//which source/priority is feeding Noah right now
 		rtcm_messages: config.rtk_rtcm_messages || [1005, 1074, 1084, 1094, 1124, 1230],
 		survey_min_seconds: config.rtk_survey_min_seconds || 30,
 		survey_accuracy_m: config.rtk_survey_accuracy_m || 2.0,
