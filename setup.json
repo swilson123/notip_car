@@ -21,7 +21,7 @@
     "rtk_heading_restart_deg": 20,
     "rtk_ntrip_fix_timeout_seconds": 60,
 
-    "groundstation": "mission_planner",
+    "groundstation": "atlas",
     "atlas_dispatch_url": "https://atlas-staging-backend-hpqlw.ondigitalocean.app/api/fleet/middleware/dispatches/latest",
     "atlas_noah_id": "noah-01",
     "atlas_ark_id": "ark-01",
