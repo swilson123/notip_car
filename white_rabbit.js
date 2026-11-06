@@ -63,6 +63,12 @@ var white_rabbit = {
 	create_ntrip_client: require('./lib/ntrip/create_ntrip_client.js'),
 	update_ntrip_location: require('./lib/ntrip/update_ntrip_location.js'),
 	ntrip_manager: require('./lib/ntrip/ntrip_manager.js'),
+	mission_upload: require('./lib/mavlink/mission_upload.js'),
+	mission_upload_handler: require('./lib/mavlink/mission_upload_handler.js'),
+	mission_upload_finish: require('./lib/mavlink/mission_upload_finish.js'),
+	fetch_atlas_dispatch: require('./lib/atlas/fetch_atlas_dispatch.js'),
+	atlas_dispatch_to_noah: require('./lib/atlas/atlas_dispatch_to_noah.js'),
+	send_groundstation_to_noah: require('./lib/atlas/send_groundstation_to_noah.js'),
 	radio_comName: config.radio_comName,
 	radio_baudrate: config.radio_baudrate,
 	witmotion_hwt906_comName: config.witmotion_hwt906_comName,
@@ -120,6 +126,32 @@ var white_rabbit = {
 		gps: null,				//latest GPS_RAW_INT
 		ntrip_ok: null,			//Noah's own NTRIP status (NAMED_VALUE_INT "NTRIP_OK")
 		ntrip_ok_time: 0,
+		armed: null,			//from the Pixhawk heartbeat, null until the first one
+	},
+
+	//Who gives Noah its waypoints: "mission_planner" (written to the Pixhawk by hand) or "atlas" (car pulls them on arm)
+	groundstation: config.groundstation || 'mission_planner',
+
+	//Atlas ground station..................................
+	atlas: {
+		dispatch_url: config.atlas_dispatch_url,
+		noah_id: config.atlas_noah_id,			//only accept dispatches for this Noah
+		ark_id: config.atlas_ark_id,			//...and this car
+		default_altitude_m: config.atlas_default_altitude_m || 0,	//used when a waypoint has no altitude
+		busy: false,
+		last_dispatch_id: null,
+	},
+
+	//Mission upload to Noah's Pixhawk in progress..................................
+	mission_upload_state: {
+		active: false,
+		items: null,
+		target_system: null,
+		target_component: null,
+		started: 0,
+		requested: false,
+		timer: null,
+		done: null,
 	},
 
 	//Which RTK correction options are on (rtk_car_ntrip / rtk_noah_ntrip / rtk_here4_base in setup.json, re-read live)
@@ -272,10 +304,11 @@ setInterval(function () {
 #========================================================================================================================================== #
 */
 
+console.log('Ground station: ' + white_rabbit.groundstation);
 console.log('RTK options - car NTRIP: ' + white_rabbit.rtk_options.car_ntrip + ', Noah NTRIP: ' + white_rabbit.rtk_options.noah_ntrip +
 	', Here 4 base: ' + white_rabbit.rtk_options.here4_base);
 
-//Flip rtk_car_ntrip / rtk_noah_ntrip / rtk_here4_base in setup.json while running - no restart needed
+//Flip rtk_car_ntrip / rtk_noah_ntrip / rtk_here4_base / groundstation in setup.json while running - no restart needed
 fs.watchFile(path.join(__dirname, 'setup.json'), { interval: 1000 }, function () {
 	try {
 		var updated = JSON.parse(fs.readFileSync(path.join(__dirname, 'setup.json')));
@@ -284,6 +317,12 @@ fs.watchFile(path.join(__dirname, 'setup.json'), { interval: 1000 }, function ()
 			noah_ntrip: updated.rtk_noah_ntrip === true,
 			here4_base: updated.rtk_here4_base === true,
 		};
+
+		var groundstation = updated.groundstation || 'mission_planner';
+		if (groundstation !== white_rabbit.groundstation) {
+			white_rabbit.groundstation = groundstation;
+			console.log('Ground station changed to: ' + groundstation);
+		}
 
 		if (JSON.stringify(options) !== JSON.stringify(white_rabbit.rtk_options)) {
 			white_rabbit.rtk_options = options;
@@ -298,5 +337,6 @@ setInterval(function () {
 	white_rabbit.ntrip_manager(white_rabbit);
 	white_rabbit.rtk_base_manager(white_rabbit);
 	white_rabbit.send_rtk_options_to_noah(white_rabbit);
+	white_rabbit.send_groundstation_to_noah(white_rabbit);
 
 }, 1000);
