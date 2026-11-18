@@ -23,6 +23,8 @@
 
     "groundstation": "atlas",
     "atlas_dispatch_url": "https://atlas-staging-backend-hpqlw.ondigitalocean.app/api/fleet/middleware/dispatches/latest",
+    "atlas_ingest_url": "https://atlas-staging-backend-hpqlw.ondigitalocean.app/api/fleet/middleware/ingest",
+    "atlas_middleware_id": "mw-ark-01",
     "atlas_noah_id": "noah-01",
     "atlas_ark_id": "ark-01",
     "atlas_default_altitude_m": 0,

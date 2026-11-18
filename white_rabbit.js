@@ -69,6 +69,7 @@ var white_rabbit = {
 	fetch_atlas_dispatch: require('./lib/atlas/fetch_atlas_dispatch.js'),
 	atlas_dispatch_to_noah: require('./lib/atlas/atlas_dispatch_to_noah.js'),
 	send_groundstation_to_noah: require('./lib/atlas/send_groundstation_to_noah.js'),
+	post_fleet_state: require('./lib/atlas/post_fleet_state.js'),
 	radio_comName: config.radio_comName,
 	radio_baudrate: config.radio_baudrate,
 	witmotion_hwt906_comName: config.witmotion_hwt906_comName,
@@ -120,10 +121,11 @@ var white_rabbit = {
 
 	//What we hear from Noah..................................
 	noah: {
-		heading: null,
 		system_id: null,
 		last_heartbeat: 0,
 		gps: null,				//latest GPS_RAW_INT
+		battery_percent: null,
+		current_waypoint_sequence: null,
 		ntrip_ok: null,			//Noah's own NTRIP status (NAMED_VALUE_INT "NTRIP_OK")
 		ntrip_ok_time: 0,
 		armed: null,			//from the Pixhawk heartbeat, null until the first one
@@ -137,6 +139,10 @@ var white_rabbit = {
 		dispatch_url: config.atlas_dispatch_url,
 		noah_id: config.atlas_noah_id,			//only accept dispatches for this Noah
 		ark_id: config.atlas_ark_id,			//...and this car
+		middleware_id: config.atlas_middleware_id || 'mw-ark-01',
+		ingest_url: config.atlas_ingest_url || 'https://atlas-staging-backend-hpqlw.ondigitalocean.app/api/fleet/middleware/ingest',
+		middleware_token: process.env.ARK_MIDDLEWARE_TOKEN,
+		fleet_state_in_flight: false,
 		default_altitude_m: config.atlas_default_altitude_m || 0,	//used when a waypoint has no altitude
 		busy: false,
 		last_dispatch_id: null,
@@ -338,5 +344,6 @@ setInterval(function () {
 	white_rabbit.rtk_base_manager(white_rabbit);
 	white_rabbit.send_rtk_options_to_noah(white_rabbit);
 	white_rabbit.send_groundstation_to_noah(white_rabbit);
+	white_rabbit.post_fleet_state(white_rabbit);
 
 }, 1000);
