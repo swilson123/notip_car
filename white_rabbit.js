@@ -35,6 +35,10 @@ try {
 }
 
 //mavlink2.js (same file Noah uses - Noah's parser only accepts MAVLink 2 frames) exports the message namespace and defines the MAVLink parser class as a global
+if (!process.env.ARK_MIDDLEWARE_TOKEN) {
+	console.log('ARK_MIDDLEWARE_TOKEN is not set - ATLAS fleet state POSTs will be rejected with 401');
+}
+
 var mavlink = require('./lib/mavlink/mavlink2.js');
 
 var white_rabbit = {
