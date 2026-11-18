@@ -145,7 +145,7 @@ var white_rabbit = {
 		ark_id: config.atlas_ark_id,			//...and this car
 		middleware_id: config.atlas_middleware_id || 'mw-ark-01',
 		ingest_url: config.atlas_ingest_url || 'https://atlas-staging-backend-hpqlw.ondigitalocean.app/api/fleet/middleware/ingest',
-		middleware_token: process.env.ARK_MIDDLEWARE_TOKEN,
+		middleware_token: "w1qhfyT8RfILzEK1-2pXgsXTA2KMZXOsRSoGm9Rdxl47uHjcbOnbtkgXQY2i8ouh",
 		fleet_state_in_flight: false,
 		default_altitude_m: config.atlas_default_altitude_m || 0,	//used when a waypoint has no altitude
 		busy: false,
